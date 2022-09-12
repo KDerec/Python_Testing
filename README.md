@@ -44,7 +44,7 @@ The app is powered by [JSON files](https://www.tutorialspoint.com/json/json_quic
 - Debug the code of a Python application.
 
 ### 🚀 Project goal
-Correct the error, the four bugs and add the feature of the issues section [here](https://github.com/OpenClassrooms-Student-Center/Python_Testing/issues).  
+With the forked project, correct the error, the four bugs and add the feature of this issues section [here](https://github.com/OpenClassrooms-Student-Center/Python_Testing/issues).  
 Create test and performance report.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -131,15 +131,18 @@ In progress
 <!-- CONTRIBUTING -->
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.  
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
+Don't forget to give the project a star! Thanks again!  
 
+The branch name must cite the type of addition and follow the format **<feature/bug/improvement>/descriptive-name**.  
+
+Example:
 1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
+2. Create your Feature Branch (`git checkout -b feature/amazing-feature`)
+3. Commit your Changes (`git commit -m 'Add some amazing-feature'`)
+4. Push to the Branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
 <p align="right">(<a href="#top">back to top</a>)</p>
