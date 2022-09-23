@@ -9,18 +9,35 @@ def create_app(test_config=None):
     if test_config is None:
         competitions = loadCompetitions()
         clubs = loadClubs()
-    
+    elif test_config is True:
+        competitions = [
+            {
+                "name": "Competition1",
+                "date": "2020-01-01 00:00:00",
+                "numberOfPlaces": "20",
+            },
+            {
+                "name": "Competition2",
+                "date": "2020-12-12 12:00:00",
+                "numberOfPlaces": "10",
+            },
+        ]
+        clubs = [
+            {"name": "Club1", "email": "test@test.com", "points": "20"},
+            {"name": "Club2", "email": "test2@test.com", "points": "10"},
+        ]
 
     @app.route("/")
     def index():
         return render_template("index.html")
 
-
     @app.route("/showSummary", methods=["POST"])
     def showSummary():
         try:
             club = [
-                club for club in clubs if club["email"] == request.form["email"]
+                club
+                for club in clubs
+                if club["email"] == request.form["email"]
             ][0]
             return render_template(
                 "welcome.html", club=club, competitions=competitions
@@ -29,11 +46,12 @@ def create_app(test_config=None):
             flash("No account related to this email, try again.", "error")
             return render_template("index.html"), 401
 
-
     @app.route("/book/<competition>/<club>")
     def book(competition, club):
         foundClub = [c for c in clubs if c["name"] == club][0]
-        foundCompetition = [c for c in competitions if c["name"] == competition][0]
+        foundCompetition = [
+            c for c in competitions if c["name"] == competition
+        ][0]
         if foundClub and foundCompetition:
             return render_template(
                 "booking.html", club=foundClub, competition=foundCompetition
@@ -43,7 +61,6 @@ def create_app(test_config=None):
             return render_template(
                 "welcome.html", club=club, competitions=competitions
             )
-
 
     @app.route("/purchasePlaces", methods=["POST"])
     def purchasePlaces():
@@ -60,15 +77,14 @@ def create_app(test_config=None):
             "welcome.html", club=club, competitions=competitions
         )
 
-
     # TODO: Add route for points display
-
 
     @app.route("/logout")
     def logout():
         return redirect(url_for("index"))
 
-    app.run(debug=True)
+    return app
+
 
 if __name__ == "__main__":
     create_app()
