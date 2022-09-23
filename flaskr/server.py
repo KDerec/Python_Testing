@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, flash, url_for
-from utils import loadClubs, loadCompetitions
+from flaskr.utils import loadClubs, loadCompetitions
 
 
 def create_app(test_config=None):
