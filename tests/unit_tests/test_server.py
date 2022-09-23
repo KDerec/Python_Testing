@@ -15,23 +15,23 @@ def test_showSummary_with_correct_email(test_client):
     """
     GIVEN a Flask application configured for testing
     WHEN the '/showSummary' page is posted (POST) with correct email
-    THEN check that the response is valid
+    THEN check that the response is OK and welcome message is here
     """
-    response = test_client.post(
-        "/showSummary", data={"email": "test@test.com"}
-    )
+    email = "test@test.com"
+    response = test_client.post("/showSummary", data={"email": email})
 
     assert response.status_code == 200
+    assert f"Welcome, {email}" in response.data.decode()
 
 
 def test_showSummary_with_unknow_email(test_client):
     """
     GIVEN a Flask application configured for testing
     WHEN the '/showSummary' page is posted (POST) with unknow email
-    THEN check that the response isn't valid
+    THEN check that the response is unauthorized and no account message is here
     """
-    response = test_client.post(
-        "/showSummary", data={"email": "wrong@test.com"}
-    )
+    email = "wrong@test.com"
+    response = test_client.post("/showSummary", data={"email": email})
 
     assert response.status_code == 401
+    assert "No account related to this email" in response.data.decode()
