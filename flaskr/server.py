@@ -9,7 +9,7 @@ def create_app(test_config=None):
     if test_config is None:
         competitions = loadCompetitions()
         clubs = loadClubs()
-    elif test_config is True:
+    if test_config is True:
         competitions = [
             {
                 "name": "Competition1",
@@ -83,7 +83,10 @@ def create_app(test_config=None):
     def logout():
         return redirect(url_for("index"))
 
-    return app
+    if test_config is None:
+        app.run()
+    if test_config is True:
+        return app
 
 
 if __name__ == "__main__":
