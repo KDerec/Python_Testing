@@ -1,5 +1,6 @@
 import json
 
+
 def loadClubs():
     with open("clubs.json") as c:
         listOfClubs = json.load(c)["clubs"]
