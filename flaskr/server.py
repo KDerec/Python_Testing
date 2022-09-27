@@ -68,14 +68,38 @@ def create_app(test_config=None):
             c for c in competitions if c["name"] == request.form["competition"]
         ][0]
         club = [c for c in clubs if c["name"] == request.form["club"]][0]
-        placesRequired = int(request.form["places"])
-        competition["numberOfPlaces"] = (
-            int(competition["numberOfPlaces"]) - placesRequired
-        )
-        flash("Great-booking complete!")
-        return render_template(
-            "welcome.html", club=club, competitions=competitions
-        )
+        clubPoints = int(club["points"])
+        availablePlaces = int(competition["numberOfPlaces"])
+        try:
+            placesRequired = int(request.form["places"])
+        except ValueError:
+            placesRequired = 0
+        if placesRequired > clubPoints:
+            flash(
+                f"⚠ You can't order more than your available points, try again."
+            )
+            return render_template(
+                "welcome.html", club=club, competitions=competitions
+            )
+        if placesRequired <= 0:
+            flash(f"⚠ Please enter a number bigger than 0, try again.")
+            return render_template(
+                "welcome.html", club=club, competitions=competitions
+            )
+        if placesRequired > availablePlaces:
+            flash(
+                f"⚠ You can't order more than {availablePlaces} places for this competitions, try again."
+            )
+            return render_template(
+                "welcome.html", club=club, competitions=competitions
+            )
+        if placesRequired <= availablePlaces:
+            competition["numberOfPlaces"] = availablePlaces - placesRequired
+            club["points"] = clubPoints - placesRequired
+            flash("Great-booking complete!")
+            return render_template(
+                "welcome.html", club=club, competitions=competitions
+            )
 
     # TODO: Add route for points display
 
@@ -84,7 +108,7 @@ def create_app(test_config=None):
         return redirect(url_for("index"))
 
     if test_config is None:
-        app.run()
+        app.run(debug=True)
     if test_config is True:
         return app
 
