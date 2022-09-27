@@ -74,32 +74,32 @@ def create_app(test_config=None):
             placesRequired = int(request.form["places"])
         except ValueError:
             placesRequired = 0
-        if placesRequired > clubPoints:
-            flash(
-                f"⚠ You can't order more than your available points, try again."
-            )
-            return render_template(
-                "welcome.html", club=club, competitions=competitions
-            )
-        if placesRequired <= 0:
-            flash(f"⚠ Please enter a number bigger than 0, try again.")
-            return render_template(
-                "welcome.html", club=club, competitions=competitions
-            )
-        if placesRequired > availablePlaces:
-            flash(
-                f"⚠ You can't order more than {availablePlaces} places for this competitions, try again."
-            )
-            return render_template(
-                "welcome.html", club=club, competitions=competitions
-            )
-        if placesRequired <= availablePlaces:
-            competition["numberOfPlaces"] = availablePlaces - placesRequired
-            club["points"] = clubPoints - placesRequired
-            flash("Great-booking complete!")
-            return render_template(
-                "welcome.html", club=club, competitions=competitions
-            )
+        while True:
+            if placesRequired <= 0:
+                flash(f"⚠ Please enter a number bigger than 0, try again.")
+                break
+            if placesRequired > clubPoints:
+                flash(
+                    f"⚠ You can't order more than your available points, try again."
+                )
+                break
+            if placesRequired > availablePlaces:
+                flash(
+                    f"⚠ You can't order more than {availablePlaces} places for this competitions, try again."
+                )
+                break
+            if placesRequired <= availablePlaces:
+                competition["numberOfPlaces"] = (
+                    availablePlaces - placesRequired
+                )
+                club["points"] = clubPoints - placesRequired
+                flash("Great-booking complete!")
+                break
+            break
+
+        return render_template(
+            "welcome.html", club=club, competitions=competitions
+        )
 
     # TODO: Add route for points display
 
