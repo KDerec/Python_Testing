@@ -1,10 +1,26 @@
 from locust import HttpUser, task
+from flaskr.utils import loadClubs, loadCompetitions
+
 
 class ProjectPerfTest(HttpUser):
+    competition = loadCompetitions()[0]
+    club = loadClubs()[0]
+
     @task
     def index(self):
         self.client.get("/")
 
     @task
     def showSummary(self):
-        self.client.post("/showSummary", {"email":"john@simplylift.co"})
+        self.client.post("/showSummary", {"email": self.club["email"]})
+
+    @task
+    def purchasePlaces(self):
+        self.client.post(
+            "/purchasePlaces",
+            {
+                "club": self.club["name"],
+                "competition": self.competition["name"],
+                "places": 0,
+            },
+        )
