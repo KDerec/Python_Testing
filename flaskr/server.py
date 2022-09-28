@@ -23,7 +23,7 @@ def create_app(test_config=None):
             },
         ]
         clubs = [
-            {"name": "Club1", "email": "test@test.com", "points": "20"},
+            {"name": "Club1", "email": "test@test.com", "points": "22"},
             {"name": "Club2", "email": "test2@test.com", "points": "10"},
         ]
 
