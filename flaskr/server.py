@@ -70,17 +70,19 @@ def create_app(test_config=None):
         club = [c for c in clubs if c["name"] == request.form["club"]][0]
         clubPoints = int(club["points"])
         availablePlaces = int(competition["numberOfPlaces"])
-        try:
-            placesRequired = int(request.form["places"])
-        except ValueError:
-            placesRequired = 0
+
         while True:
-            if placesRequired <= 0:
-                flash(f"⚠ Please enter a number bigger than 0, try again.")
+            try:
+                placesRequired = int(request.form["places"])
+            except ValueError:
+                flash("⚠ Please enter an integer number, try again.")
+                break
+            if placesRequired < 0:
+                flash("⚠ Please enter a number bigger than 0, try again.")
                 break
             if placesRequired > clubPoints:
                 flash(
-                    f"⚠ You can't order more than your available points, try again."
+                    "⚠ You can't order more than your available points, try again."
                 )
                 break
             if placesRequired > availablePlaces:
@@ -93,12 +95,17 @@ def create_app(test_config=None):
                     availablePlaces - placesRequired
                 )
                 club["points"] = clubPoints - placesRequired
-                flash("Great-booking complete!")
-                break
+                flash(f"Great-booking complete! ({placesRequired} places)")
+                return render_template(
+                    "welcome.html", club=club, competitions=competitions
+                )
             break
 
-        return render_template(
-            "welcome.html", club=club, competitions=competitions
+        return (
+            render_template(
+                "welcome.html", club=club, competitions=competitions
+            ),
+            400,
         )
 
     # TODO: Add route for points display
