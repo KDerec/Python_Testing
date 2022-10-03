@@ -82,12 +82,27 @@ def create_app(test_config=None):
                 break
             if placesRequired > clubPoints:
                 flash(
-                    "⚠ You can't order more than your available points, try again."
+                    """⚠ You can't order more than your available points, 
+                    try again."""
                 )
                 break
             if placesRequired > availablePlaces:
                 flash(
-                    f"⚠ You can't order more than {availablePlaces} places for this competitions, try again."
+                    f"""⚠ You can't order more than {availablePlaces} places 
+                    for this competitions, try again."""
+                )
+                break
+            try:
+                club[competition["name"]]
+            except KeyError:
+                club[competition["name"]] = 0
+
+            if placesRequired + club[competition["name"]] > 12:
+                reservedPoint = club[competition["name"]]
+                flash(
+                    f"""⚠ You can't order more than 12 places for this 
+                    competitions (you already purchase {reservedPoint} places).
+                    """
                 )
                 break
             if placesRequired <= availablePlaces:
@@ -95,6 +110,7 @@ def create_app(test_config=None):
                     availablePlaces - placesRequired
                 )
                 club["points"] = clubPoints - placesRequired
+                club[competition["name"]] += placesRequired
                 flash(f"Great-booking complete! ({placesRequired} places)")
                 return render_template(
                     "welcome.html", club=club, competitions=competitions
