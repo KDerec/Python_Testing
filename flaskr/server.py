@@ -1,5 +1,9 @@
 from flask import Flask, render_template, request, redirect, flash, url_for
-from flaskr.utils import loadClubs, loadCompetitions
+from flaskr.utils import (
+    loadClubs,
+    loadCompetitions,
+    checkAndCreateIsInThePastForCompetitions,
+)
 
 
 def create_app(test_config=None):
@@ -26,6 +30,8 @@ def create_app(test_config=None):
             {"name": "Club1", "email": "test@test.com", "points": "22"},
             {"name": "Club2", "email": "test2@test.com", "points": "10"},
         ]
+
+    competitions = checkAndCreateIsInThePastForCompetitions(competitions)
 
     @app.route("/")
     def index():
