@@ -58,6 +58,11 @@ def create_app(test_config=None):
         foundCompetition = [
             c for c in competitions if c["name"] == competition
         ][0]
+        if foundCompetition["is_in_the_past"] is True:
+            flash("You can't order place for a outdated competition.")
+            return render_template(
+                "welcome.html", club=club, competitions=competitions
+            )
         if foundClub and foundCompetition:
             return render_template(
                 "booking.html", club=foundClub, competition=foundCompetition
