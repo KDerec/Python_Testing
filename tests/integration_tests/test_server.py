@@ -187,3 +187,72 @@ def test_purchasePlaces_more_required_places_than_available_places(
                     for this competitions, try again."""
         in response.data.decode()
     )
+
+
+def test_purchasePlaces_more_than_twelve_required_places(
+    test_client, undeducted_points_text, club_and_competition
+):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/purchasePlaces' page is posted (POST) with enough club point and
+    competiton places, but the club try to order more than 12 places
+    THEN check that the response is Bad request, error message is here,
+    available point and number of place are the same
+    """
+    club_name = club_and_competition["club"]
+    competition_name = club_and_competition["competition"]
+    requiredPlaces = 13
+    response = test_client.post(
+        "/purchasePlaces",
+        data={
+            "club": club_name,
+            "competition": competition_name,
+            "places": requiredPlaces,
+        },
+    )
+    assert response.status_code == 400
+    assert undeducted_points_text["available_points"] in response.data.decode()
+    assert undeducted_points_text["number_of_places"] in response.data.decode()
+    assert "You can&#39;t order more than 12 places" in response.data.decode()
+
+
+def test_purchasePlaces_more_than_twelve_required_places_in_two_times(
+    test_client, undeducted_points_text, club_and_competition
+):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/purchasePlaces' page is posted (POST) in a first time with an
+    happy path and the same club try to order places again, but the total
+    amount of ordered place is more than 12
+    THEN check that the response is Bad request, error message is here,
+    available point and number of place are the same after the second attempt
+    """
+    club_name = club_and_competition["club"]
+    competition_name = club_and_competition["competition"]
+    requiredPlaces = 5
+    response = test_client.post(
+        "/purchasePlaces",
+        data={
+            "club": club_name,
+            "competition": competition_name,
+            "places": requiredPlaces,
+        },
+    )
+    assert response.status_code == 200
+    assert "Points available: 17" in response.data.decode()
+    assert "Number of Places: 15" in response.data.decode()
+    assert "Great-booking complete!" in response.data.decode()
+
+    requiredPlaces = 8
+    response = test_client.post(
+        "/purchasePlaces",
+        data={
+            "club": club_name,
+            "competition": competition_name,
+            "places": requiredPlaces,
+        },
+    )
+    assert response.status_code == 400
+    assert "Points available: 17" in response.data.decode()
+    assert "Number of Places: 15" in response.data.decode()
+    assert "You can&#39;t order more than 12 places" in response.data.decode()
