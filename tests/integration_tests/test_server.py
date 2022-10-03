@@ -50,14 +50,14 @@ def test_purchasePlaces_happy_path(test_client, club_and_competition):
     THEN check that the response is OK, success message is here,
     available point and number of place are deducted
     """
-    club = club_and_competition["club"]
-    competition = club_and_competition["competition"]
+    club_name = club_and_competition["club"]
+    competition_name = club_and_competition["competition"]
     requiredPlaces = 5
     response = test_client.post(
         "/purchasePlaces",
         data={
-            "club": club,
-            "competition": competition,
+            "club": club_name,
+            "competition": competition_name,
             "places": requiredPlaces,
         },
     )
@@ -77,14 +77,14 @@ def test_purchasePlaces_required_places_isnt_int(
     THEN check that the response is Bad request, error message is here,
     available point and number of place are the same
     """
-    club = club_and_competition["club"]
-    competition = club_and_competition["competition"]
+    club_name = club_and_competition["club"]
+    competition_name = club_and_competition["competition"]
     requiredPlaces = ""
     response = test_client.post(
         "/purchasePlaces",
         data={
-            "club": club,
-            "competition": competition,
+            "club": club_name,
+            "competition": competition_name,
             "places": requiredPlaces,
         },
     )
@@ -108,14 +108,14 @@ def test_purchasePlaces_required_places_is_less_or_equal_to_zero(
     THEN check that the response is Bad request, error message is here,
     available point and number of place are the same
     """
-    club = club_and_competition["club"]
-    competition = club_and_competition["competition"]
+    club_name = club_and_competition["club"]
+    competition_name = club_and_competition["competition"]
     requiredPlaces = -1
     response = test_client.post(
         "/purchasePlaces",
         data={
-            "club": club,
-            "competition": competition,
+            "club": club_name,
+            "competition": competition_name,
             "places": requiredPlaces,
         },
     )
@@ -138,14 +138,14 @@ def test_purchasePlaces_more_required_places_than_club_points(
     THEN check that the response is Bad request, error message is here,
     available point and number of place are the same
     """
-    club = club_and_competition["club"]
-    competition = club_and_competition["competition"]
+    club_name = club_and_competition["club"]
+    competition_name = club_and_competition["competition"]
     requiredPlaces = 100
     response = test_client.post(
         "/purchasePlaces",
         data={
-            "club": club,
-            "competition": competition,
+            "club": club_name,
+            "competition": competition_name,
             "places": requiredPlaces,
         },
     )
@@ -153,7 +153,7 @@ def test_purchasePlaces_more_required_places_than_club_points(
     assert undeducted_points_text["available_points"] in response.data.decode()
     assert undeducted_points_text["number_of_places"] in response.data.decode()
     assert (
-        "You can&#39;t order more than your available points, try again."
+        "You can&#39;t order more than your available points"
         in response.data.decode()
     )
 
@@ -168,14 +168,14 @@ def test_purchasePlaces_more_required_places_than_available_places(
     THEN check that the response is Bad request, error message is here,
     available point and number of place are the same
     """
-    club = club_and_competition["club"]
-    competition = club_and_competition["competition"]
+    club_name = club_and_competition["club"]
+    competition_name = club_and_competition["competition"]
     requiredPlaces = 21
     response = test_client.post(
         "/purchasePlaces",
         data={
-            "club": club,
-            "competition": competition,
+            "club": club_name,
+            "competition": competition_name,
             "places": requiredPlaces,
         },
     )
@@ -183,6 +183,7 @@ def test_purchasePlaces_more_required_places_than_available_places(
     assert undeducted_points_text["available_points"] in response.data.decode()
     assert undeducted_points_text["number_of_places"] in response.data.decode()
     assert (
-        "You can&#39;t order more than 20 places for this competitions, try again."
+        """You can&#39;t order more than 20 places 
+                    for this competitions, try again."""
         in response.data.decode()
     )
