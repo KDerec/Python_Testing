@@ -17,7 +17,7 @@ def create_app(test_config=None):
         competitions = [
             {
                 "name": "Competition1",
-                "date": "2020-01-01 00:00:00",
+                "date": "2023-01-01 00:00:00",
                 "numberOfPlaces": "20",
             },
             {

@@ -260,3 +260,38 @@ def test_purchasePlaces_more_than_twelve_required_places_in_two_times(
     assert "Points available: 17" in response.data.decode()
     assert "Number of Places: 15" in response.data.decode()
     assert "You can&#39;t order more than 12 places" in response.data.decode()
+
+
+def test_book_happy_path(test_client, db_data):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/book/<competition>/<club>' page is requested (GET)
+    THEN check that the response is valid
+    """
+    club_name = db_data["club"]
+    competition_name = db_data["competition"]
+    response = test_client.get(f"/book/{competition_name}/{club_name}")
+
+    assert response.status_code == 200
+    assert f"{competition_name}" in response.data.decode()
+    assert "Places available: 20" in response.data.decode()
+
+
+def test_book_competition_in_the_past(test_client, db_data):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/book/<competition>/<club>' page is requested (GET) for an
+    outdated competition
+    THEN check that the response is Bad request, error message is here,
+    available point and number of place are the same after the second attempt
+    """
+    club_name = db_data["club"]
+    email = "test@test.com"
+    response = test_client.get(f"/book/Competition2/{club_name}")
+
+    assert response.status_code == 400
+    assert (
+        "You can&#39;t order place for an outdated competition."
+        in response.data.decode()
+    )
+    assert f"Welcome, {email}" in response.data.decode()
