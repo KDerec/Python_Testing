@@ -23,13 +23,13 @@
             {% if comp['is_in_the_past'] == True %}
             {{comp['name']}}<br />
             Date: {{comp['date']}}</br>
-            Booking are closed.
+            Booking for {{comp['name']}} are closed.
             {% else %}
             {{comp['name']}}<br />
             Date: {{comp['date']}}</br>
             Number of Places: {{comp['numberOfPlaces']}}
             {%if comp['numberOfPlaces']|int >0%}
-            <a href="{{ url_for('book',competition=comp['name'],club=club['name']) }}">Book Places</a>
+            <a href="{{ url_for('book',competition=comp['name'],club=club['name']) }}">Book Places for {{comp['name']}} !</a>
             {%endif%}
             {%endif%}
         </li>

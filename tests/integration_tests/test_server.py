@@ -20,7 +20,8 @@ def test_showSummary_with_correct_email(test_client, db_data):
     """
     GIVEN a Flask application configured for testing
     WHEN the '/showSummary' page is posted (POST) with correct email
-    THEN check that the response is OK and welcome message is here
+    THEN check that the response is OK, welcome message is here,
+    "Book place" button don't appear for outdated competition
     """
     competition_name = db_data["competition"]
     email = db_data["email"]
@@ -28,6 +29,8 @@ def test_showSummary_with_correct_email(test_client, db_data):
 
     assert response.status_code == 200
     assert f"Welcome, {email}" in response.data.decode()
+    assert "Booking for Competition2 are closed." in response.data.decode()
+    assert f"Book Places for {competition_name} !" in response.data.decode()
 
 
 def test_showSummary_with_unknow_email(test_client):
