@@ -18,6 +18,10 @@ def undeducted_points_text():
 
 
 @pytest.fixture()
-def club_and_competition():
-    data = {"club": "Club1", "competition": "Competition1"}
+def db_data():
+    data = {
+        "club": "Club1",
+        "competition": "Competition1",
+        "email": "test@test.com",
+    }
     return data

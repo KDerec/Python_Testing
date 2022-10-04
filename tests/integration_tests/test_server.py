@@ -2,7 +2,7 @@ import pytest
 from ..conftest import (
     test_client,
     undeducted_points_text,
-    club_and_competition,
+    db_data,
 )
 
 
@@ -16,13 +16,14 @@ def test_index(test_client):
     assert response.status_code == 200
 
 
-def test_showSummary_with_correct_email(test_client):
+def test_showSummary_with_correct_email(test_client, db_data):
     """
     GIVEN a Flask application configured for testing
     WHEN the '/showSummary' page is posted (POST) with correct email
     THEN check that the response is OK and welcome message is here
     """
-    email = "test@test.com"
+    competition_name = db_data["competition"]
+    email = db_data["email"]
     response = test_client.post("/showSummary", data={"email": email})
 
     assert response.status_code == 200
@@ -42,7 +43,7 @@ def test_showSummary_with_unknow_email(test_client):
     assert "No account related to this email" in response.data.decode()
 
 
-def test_purchasePlaces_happy_path(test_client, club_and_competition):
+def test_purchasePlaces_happy_path(test_client, db_data):
     """
     GIVEN a Flask application configured for testing
     WHEN the '/purchasePlaces' page is posted (POST) with enough club point,
@@ -50,8 +51,8 @@ def test_purchasePlaces_happy_path(test_client, club_and_competition):
     THEN check that the response is OK, success message is here,
     available point and number of place are deducted
     """
-    club_name = club_and_competition["club"]
-    competition_name = club_and_competition["competition"]
+    club_name = db_data["club"]
+    competition_name = db_data["competition"]
     requiredPlaces = 5
     response = test_client.post(
         "/purchasePlaces",
@@ -68,7 +69,7 @@ def test_purchasePlaces_happy_path(test_client, club_and_competition):
 
 
 def test_purchasePlaces_required_places_isnt_int(
-    test_client, undeducted_points_text, club_and_competition
+    test_client, undeducted_points_text, db_data
 ):
     """
     GIVEN a Flask application configured for testing
@@ -77,8 +78,8 @@ def test_purchasePlaces_required_places_isnt_int(
     THEN check that the response is Bad request, error message is here,
     available point and number of place are the same
     """
-    club_name = club_and_competition["club"]
-    competition_name = club_and_competition["competition"]
+    club_name = db_data["club"]
+    competition_name = db_data["competition"]
     requiredPlaces = ""
     response = test_client.post(
         "/purchasePlaces",
@@ -99,7 +100,7 @@ def test_purchasePlaces_required_places_isnt_int(
 
 
 def test_purchasePlaces_required_places_is_less_or_equal_to_zero(
-    test_client, undeducted_points_text, club_and_competition
+    test_client, undeducted_points_text, db_data
 ):
     """
     GIVEN a Flask application configured for testing
@@ -108,8 +109,8 @@ def test_purchasePlaces_required_places_is_less_or_equal_to_zero(
     THEN check that the response is Bad request, error message is here,
     available point and number of place are the same
     """
-    club_name = club_and_competition["club"]
-    competition_name = club_and_competition["competition"]
+    club_name = db_data["club"]
+    competition_name = db_data["competition"]
     requiredPlaces = -1
     response = test_client.post(
         "/purchasePlaces",
@@ -129,7 +130,7 @@ def test_purchasePlaces_required_places_is_less_or_equal_to_zero(
 
 
 def test_purchasePlaces_more_required_places_than_club_points(
-    test_client, undeducted_points_text, club_and_competition
+    test_client, undeducted_points_text, db_data
 ):
     """
     GIVEN a Flask application configured for testing
@@ -138,8 +139,8 @@ def test_purchasePlaces_more_required_places_than_club_points(
     THEN check that the response is Bad request, error message is here,
     available point and number of place are the same
     """
-    club_name = club_and_competition["club"]
-    competition_name = club_and_competition["competition"]
+    club_name = db_data["club"]
+    competition_name = db_data["competition"]
     requiredPlaces = 100
     response = test_client.post(
         "/purchasePlaces",
@@ -159,7 +160,7 @@ def test_purchasePlaces_more_required_places_than_club_points(
 
 
 def test_purchasePlaces_more_required_places_than_available_places(
-    test_client, undeducted_points_text, club_and_competition
+    test_client, undeducted_points_text, db_data
 ):
     """
     GIVEN a Flask application configured for testing
@@ -168,8 +169,8 @@ def test_purchasePlaces_more_required_places_than_available_places(
     THEN check that the response is Bad request, error message is here,
     available point and number of place are the same
     """
-    club_name = club_and_competition["club"]
-    competition_name = club_and_competition["competition"]
+    club_name = db_data["club"]
+    competition_name = db_data["competition"]
     requiredPlaces = 21
     response = test_client.post(
         "/purchasePlaces",
@@ -190,7 +191,7 @@ def test_purchasePlaces_more_required_places_than_available_places(
 
 
 def test_purchasePlaces_more_than_twelve_required_places(
-    test_client, undeducted_points_text, club_and_competition
+    test_client, undeducted_points_text, db_data
 ):
     """
     GIVEN a Flask application configured for testing
@@ -199,8 +200,8 @@ def test_purchasePlaces_more_than_twelve_required_places(
     THEN check that the response is Bad request, error message is here,
     available point and number of place are the same
     """
-    club_name = club_and_competition["club"]
-    competition_name = club_and_competition["competition"]
+    club_name = db_data["club"]
+    competition_name = db_data["competition"]
     requiredPlaces = 13
     response = test_client.post(
         "/purchasePlaces",
@@ -217,7 +218,7 @@ def test_purchasePlaces_more_than_twelve_required_places(
 
 
 def test_purchasePlaces_more_than_twelve_required_places_in_two_times(
-    test_client, undeducted_points_text, club_and_competition
+    test_client, undeducted_points_text, db_data
 ):
     """
     GIVEN a Flask application configured for testing
@@ -227,8 +228,8 @@ def test_purchasePlaces_more_than_twelve_required_places_in_two_times(
     THEN check that the response is Bad request, error message is here,
     available point and number of place are the same after the second attempt
     """
-    club_name = club_and_competition["club"]
-    competition_name = club_and_competition["competition"]
+    club_name = db_data["club"]
+    competition_name = db_data["competition"]
     requiredPlaces = 5
     response = test_client.post(
         "/purchasePlaces",
