@@ -24,3 +24,9 @@ class ProjectPerfTest(HttpUser):
                 "places": 0,
             },
         )
+
+    @task
+    def book(self):
+        club_name = self.club["name"]
+        competition_name = self.competition["name"]
+        self.client.get(f"/book/{competition_name}/{club_name}")
