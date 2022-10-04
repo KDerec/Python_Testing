@@ -26,4 +26,6 @@ def checkAndCreateIsInThePastForCompetitions(competitions):
         )
         if competitionDateObj < now:
             competitions[i]["is_in_the_past"] = True
+        else:
+            competitions[i]["is_in_the_past"] = False
     return competitions
