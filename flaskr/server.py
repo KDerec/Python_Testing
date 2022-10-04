@@ -138,7 +138,9 @@ def create_app(test_config=None):
             400,
         )
 
-    # TODO: Add route for points display
+    @app.route("/pointsDisplayBoard")
+    def pointDisplayBoard():
+        return render_template("points-display-board.html", clubs=clubs)
 
     @app.route("/logout")
     def logout():
