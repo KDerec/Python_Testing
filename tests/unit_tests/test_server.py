@@ -295,3 +295,17 @@ def test_book_competition_in_the_past(test_client, db_data):
         in response.data.decode()
     )
     assert f"Welcome, {email}" in response.data.decode()
+
+
+def test_pointsDisplayBoard_happy_path(test_client, db_data):
+    """
+    GIVEN a Flask application configured for testing
+    WHEN the '/pointsDisplayBoard' page is requested (GET)
+    THEN check that the response is valid and texts are in data response
+    """
+    club_name = db_data["club"]
+    response = test_client.get("/pointsDisplayBoard")
+
+    assert response.status_code == 200
+    assert "Points display board" in response.data.decode()
+    assert f"{club_name}" in response.data.decode()

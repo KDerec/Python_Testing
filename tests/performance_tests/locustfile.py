@@ -3,8 +3,8 @@ from flaskr.utils import loadClubs, loadCompetitions
 
 
 class ProjectPerfTest(HttpUser):
-    competition = loadCompetitions()[0]
-    club = loadClubs()[0]
+    competition = loadCompetitions()[2]
+    club = loadClubs()[2]
 
     @task
     def index(self):
@@ -30,3 +30,7 @@ class ProjectPerfTest(HttpUser):
         club_name = self.club["name"]
         competition_name = self.competition["name"]
         self.client.get(f"/book/{competition_name}/{club_name}")
+
+    @task
+    def pointsDisplayBoard(self):
+        self.client.get("/pointsDisplayBoard")
