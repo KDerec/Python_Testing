@@ -139,7 +139,7 @@ def create_app(test_config=None):
         )
 
     @app.route("/pointsDisplayBoard")
-    def pointDisplayBoard():
+    def pointsDisplayBoard():
         return render_template("points-display-board.html", clubs=clubs)
 
     @app.route("/logout")
