@@ -3,6 +3,8 @@ include
 Lib
 .Python
 .envrc
+.coverage
+.coveragerc
 __pycache__
 Scripts
 pyvenv.cfg
