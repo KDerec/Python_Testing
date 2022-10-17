@@ -10,7 +10,7 @@
 
 <h3 align="center">Test and debug a Python project</h3>
   <p align="center">
-    This student project is the #8 of my training (<i>IN PROGRESS...</i>).<br>You can follow the previous <a href="https://github.com/KDerec/softdesk">here</a> and next one is in progress.
+    This student project is the #8 of my training.<br>You can follow the previous <a href="https://github.com/KDerec/softdesk">here</a> and next one <a href="https://github.com/KDerec/CRM_epic_events">here</a>.
   </p>
 </div>
 
@@ -23,7 +23,6 @@
     <li><a href="#built-with">Built With</a></li>
     <li><a href="#installation">Installation</a></li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
 </details>
@@ -31,32 +30,50 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-This is a proof of concept (POC) project to show a light-weight version of our competition booking platform. The aim is the keep things as light as possible, and use feedback from the users to iterate.
-
-The app is powered by [JSON files](https://www.tutorialspoint.com/json/json_quick_guide.htm). This is to get around having a DB until we actually need one. The main ones are:
-    
-* competitions.json - list of competitions
-* clubs.json - list of clubs with relevant information. You can look here to see what email addresses the app will accept for login.
 ### 🌱 Developped skills
 - Analyze application performance with Locust.
 - Implement a Python test suite.
 - Handle errors and exceptions in Python.
 - Debug the code of a Python application.
 
-### 🚀 Project goal
-With the forked project, correct the error, the four bugs and add the feature of this issues section [here](https://github.com/OpenClassrooms-Student-Center/Python_Testing/issues).  
-Create test and performance report.
+### 📖 Scenario
+I work for **Güdlft**, a company that created a digital platform to coordinate strength competitions (deadlifting 🏋🏻‍♂️, strongman) exclusively for branded fitness apparel companies.  
+
+Now, Güdlft has created a team called **Regional Outreach** to create a lighter (and less expensive) version of their current platform for regional organizers.  
+
+The team drew up a list of functional specifications for a prototype, broken down into several phases.  
+Sam, the main developer took care of **phase 1**, but he's getting sick, so I'm in charge of **fixing the bugs** in phase 1 and **adding the feature** expected in **phase 2**.
+
+### 🚧 Project goal
+The goal of the application is to streamline the management of competitions between clubs (hosting, registration, fees and administration).  
+This is a proof of concept (POC) project, The aim is the keep things as light as possible, and use feedback from the users to iterate.  
+The app is powered by **JSON** files. This is to get around having a DB until we actually need one. The main ones are:
+    
+* competitions.json - list of competitions
+* clubs.json - list of clubs with relevant information. You can look here to see what email addresses the app will accept for login.
+
+
+With the forked project, correct the **error**, **bugs** and add the **feature** of this issues section [here](https://github.com/OpenClassrooms-Student-Center/Python_Testing/issues).  
+
+Create **tests** and **performance report**.
+
+### 🚀 Deliverable
+#### [Test coverage](https://github.com/KDerec/Python_Testing/blob/master/docs/pytest_coverage.JPG)
+<a href="https://github.com/KDerec/Python_Testing/blob/master/docs/pytest_coverage.JPG"><img src="docs/pytest_coverage.JPG" alt="pytest-coverage">  
+#### [Performance report](https://htmlpreview.github.io/?https://github.com/KDerec/Python_Testing/blob/master/docs/locust_report.html)
+See complete report with request, response time statistics and beautiful charts [here](https://htmlpreview.github.io/?https://github.com/KDerec/Python_Testing/blob/master/docs/locust_report.html).
+#### [Tests](https://github.com/KDerec/Python_Testing/tree/master/tests)
+Unit tests for server.py and utils.py
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
 ### Built With
 
-* [Python v3.x+](https://www.python.org/)
-* [Flask](https://flask.palletsprojects.com/en/2.2.x/)
+* [Python 3.9](https://www.python.org/)
+* [Flask 1.1](https://flask.palletsprojects.com/en/2.2.x/)
 * [Virtual environment](https://virtualenv.pypa.io/en/stable/installation.html)
 
-Before you begin, please ensure you have this installed globally.
+**Before you begin, please ensure you have this installed globally.**
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -74,7 +91,7 @@ Before you begin, please ensure you have this installed globally.
    ```
 4. Create a virtual environnement ;
       ```sh
-      virtualenv.
+      virtualenv .
       ```
 5. Activate the virtual environment ;
     * For Windows :
@@ -89,11 +106,6 @@ Before you begin, please ensure you have this installed globally.
    ```sh
    pip install -r requirements.txt
    ```
-7. Flask requires that you set an environmental variable to the python file. However you do that, you'll want to set the file to be `server.py`.  
-   Check [here](https://flask.palletsprojects.com/en/1.1.x/quickstart/#a-minimal-application) for more details
-
-8. You should now be ready to test the application. In the directory, type either <code>flask run</code> or <code>python -m flask run</code>. The app should respond with an address you should be able to go to using your browser.
-
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -122,37 +134,50 @@ Before you begin, please ensure you have this installed globally.
 
 <!-- USAGE EXAMPLES -->
 ## Usage
+### Run the server
+1. Change directory to flaskr folder ;
+   ```sh
+   cd path/to/Python_Testing/flaskr
+   ```
+2. Run the server ;
+   ```sh
+   python server.py
+   ```
 
-In progress
+3. Go to http://127.0.0.1:5000/, login with an email accounts of [clubs.json](https://github.com/KDerec/Python_Testing/blob/master/flaskr/clubs.json), for example, john@simplylift.co and enjoy.
 
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.  
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!  
-
-The branch name must cite the type of addition and follow the format **<feature/bug/improvement>/descriptive-name**.  
-
-Example:
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/amazing-feature`)
-3. Commit your Changes (`git commit -m 'Add some amazing-feature'`)
-4. Push to the Branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+### Tests and coverage test
+1. To run tests and coverage test, go to ;
+   ```sh
+   cd path/to/Python_Testing/tests
+   ```
+2. Enter the two commands below ;
+   ```sh
+   coverage run -m pytest
+   coverage report -m
+   ```
+### Performance test
+1. Run server (see above) ;
+1. Go to ;
+   ```sh
+   cd path/to/Python_Testing/tests/performance_tests
+   ```
+2. Enter ;
+   ```sh
+   locust
+   ```
+3. Go to http://localhost:8089/, enter a number of users, spawn rate and host (http://127.0.0.1:5000/ by default) and click on "Start swarming".
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
 <!-- CONTACT -->
 ## Contact
-
-Kévin Dérécusson - kevin.derecusson@outlook.fr
-
-Project Link: [https://github.com/KDerec/Python_Testing](https://github.com/KDerec/Python_Testing)
+Kévin Dérécusson 👇🏻  
+Email : kevin.derecusson@outlook.fr  
+LinkedIn : https://www.linkedin.com/in/kevin-derecusson/  
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+
+<i>This student project is the #8 of my training.<br>You can follow the previous <a href="https://github.com/KDerec/softdesk">here</a> and next one <a href="https://github.com/KDerec/CRM_epic_events">here</a>.</i>
