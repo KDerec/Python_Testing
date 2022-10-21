@@ -102,13 +102,13 @@ def test_purchasePlaces_required_places_isnt_int(
     )
 
 
-def test_purchasePlaces_required_places_is_less_or_equal_to_zero(
+def test_purchasePlaces_required_places_is_less_than_zero(
     test_client, undeducted_points_text, db_data
 ):
     """
     GIVEN a Flask application configured for testing
     WHEN the '/purchasePlaces' page is posted (POST) with enough club point,
-    competition place, but required places is less or equal to zero
+    competition place, but required places is less than zero
     THEN check that the response is Bad request, error message is here,
     available point and number of place are the same
     """
@@ -221,7 +221,7 @@ def test_purchasePlaces_more_than_twelve_required_places(
 
 
 def test_purchasePlaces_more_than_twelve_required_places_in_two_times(
-    test_client, undeducted_points_text, db_data
+    test_client, db_data
 ):
     """
     GIVEN a Flask application configured for testing
